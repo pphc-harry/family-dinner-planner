@@ -358,7 +358,7 @@ function renderMenu() {
   elements.dishList.replaceChildren();
   if (!dishes.length) {
     const empty = document.createElement("article");
-    empty.className = "dish-item";
+    empty.className = "dish-item dish-item-empty";
     empty.innerHTML = "<div><strong>沒有找到菜式</strong><span>試試用另一個字搜尋。</span></div>";
     elements.dishList.append(empty);
     return;
@@ -367,10 +367,15 @@ function renderMenu() {
   dishes.forEach((dish) => {
     const row = document.createElement("article");
     row.className = "dish-item";
+    const thumb = document.createElement("img");
     const text = document.createElement("div");
     const title = document.createElement("strong");
     const meta = document.createElement("span");
     const button = document.createElement("button");
+    thumb.className = "dish-thumb";
+    thumb.src = generatedDishImage(dish);
+    thumb.alt = `${dish.name}插圖`;
+    thumb.loading = "lazy";
     title.textContent = dish.name;
     meta.textContent = `${dish.type} · ${dish.tags.slice(0, 3).join(" / ")}`;
     button.type = "button";
@@ -378,7 +383,7 @@ function renderMenu() {
     button.textContent = "今晚";
     button.addEventListener("click", () => useDishTonight(dish));
     text.append(title, meta);
-    row.append(text, button);
+    row.append(thumb, text, button);
     elements.dishList.append(row);
   });
 }
@@ -499,6 +504,74 @@ function comboTitle(combo) {
 
 function displayName(dish) {
   return dish.variant ? `${dish.name} · ${dish.variant}` : dish.name;
+}
+
+function generatedDishImage(dish) {
+  const seed = hashString(`${dish.name}-${dish.type}-${dish.tags.join("-")}`);
+  const palette = imagePalette(dish, seed);
+  const steam = dish.tags.some((tag) => ["蒸餸", "炆餸", "豆腐", "青菜"].includes(tag));
+  const pan = dish.tags.some((tag) => ["煎香", "快手", "即食"].includes(tag));
+  const garnishA = 36 + (seed % 30);
+  const garnishB = 96 + (seed % 34);
+  const label = dish.name.replace(/[^\p{Script=Han}\p{Letter}\p{Number}]/gu, "").slice(0, 2) || dish.type;
+
+  const svg = `
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">
+      <rect width="160" height="160" rx="34" fill="${palette.bg}"/>
+      <circle cx="126" cy="28" r="22" fill="${palette.blob}" opacity=".62"/>
+      <circle cx="35" cy="132" r="26" fill="${palette.blob}" opacity=".42"/>
+      ${steam ? '<path d="M54 37c-12 12 10 18-1 31M80 31c-12 14 10 20-1 34M105 39c-10 10 7 17-2 28" fill="none" stroke="#fff7e8" stroke-width="8" stroke-linecap="round" opacity=".72"/>' : ""}
+      ${pan ? '<path d="M34 104h88c16 0 24 10 23 20H31c-2-10 1-17 3-20Z" fill="#23211e" opacity=".18"/><path d="M126 109l23-12" stroke="#23211e" stroke-width="9" stroke-linecap="round" opacity=".18"/>' : ""}
+      <ellipse cx="80" cy="91" rx="55" ry="38" fill="#fffaf2"/>
+      <ellipse cx="80" cy="88" rx="43" ry="28" fill="${palette.plate}"/>
+      <path d="M49 84c21-21 48-23 66-5-16 6-36 9-66 5Z" fill="${palette.food1}"/>
+      <path d="M49 97c24 14 46 15 70 1-12 20-54 22-70-1Z" fill="${palette.food2}"/>
+      <circle cx="${garnishA}" cy="80" r="6" fill="#4ea96f"/>
+      <circle cx="${garnishB}" cy="74" r="5" fill="#d95643"/>
+      <path d="M60 106c15 8 33 8 48 0" fill="none" stroke="#fff2c6" stroke-width="6" stroke-linecap="round" opacity=".82"/>
+      <rect x="50" y="18" width="60" height="30" rx="15" fill="rgba(255,255,255,.72)"/>
+      <text x="80" y="39" text-anchor="middle" font-family="PingFang TC, Noto Sans TC, sans-serif" font-size="18" font-weight="800" fill="${palette.text}">${escapeSvg(label)}</text>
+    </svg>
+  `;
+
+  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+}
+
+function imagePalette(dish, seed) {
+  const palettes = {
+    chicken: { bg: "#fff0bc", blob: "#ff8f4f", plate: "#ffd36f", food1: "#e7893d", food2: "#c05238", text: "#9a4b24" },
+    pork: { bg: "#ffe1d8", blob: "#ffb341", plate: "#ffc0a9", food1: "#d7674e", food2: "#9f3d31", text: "#9f3d31" },
+    beef: { bg: "#ead9c4", blob: "#ffb341", plate: "#d0a17b", food1: "#8b5642", food2: "#5a352b", text: "#5a352b" },
+    seafood: { bg: "#dceef8", blob: "#55bd82", plate: "#a8d7ea", food1: "#4f91b8", food2: "#2d6f8e", text: "#2d6f8e" },
+    veg: { bg: "#dff4e8", blob: "#ffb341", plate: "#b9e7c5", food1: "#55bd82", food2: "#2e8d58", text: "#2e8d58" },
+    egg: { bg: "#fff2cf", blob: "#55bd82", plate: "#ffe08b", food1: "#f4b43f", food2: "#fff7d7", text: "#b87417" },
+    quick: { bg: "#eee9ff", blob: "#ffb341", plate: "#cfc5f4", food1: "#8f7bd6", food2: "#5f4aa4", text: "#5f4aa4" },
+  };
+
+  const tags = [dish.type, ...dish.tags].join(" ");
+  if (tags.includes("雞")) return palettes.chicken;
+  if (tags.includes("豬")) return palettes.pork;
+  if (tags.includes("牛")) return palettes.beef;
+  if (tags.includes("魚") || tags.includes("海鮮")) return palettes.seafood;
+  if (tags.includes("蛋")) return palettes.egg;
+  if (dish.quick || tags.includes("快")) return palettes.quick;
+  if (tags.includes("青菜") || tags.includes("蔬菜") || tags.includes("豆腐")) return palettes.veg;
+  return Object.values(palettes)[seed % Object.keys(palettes).length];
+}
+
+function hashString(text) {
+  let hash = 0;
+  for (let index = 0; index < text.length; index += 1) {
+    hash = (hash * 31 + text.charCodeAt(index)) >>> 0;
+  }
+  return hash;
+}
+
+function escapeSvg(text) {
+  return text.replace(/[&<>"']/g, (char) => {
+    const entities = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&apos;" };
+    return entities[char];
+  });
 }
 
 function slugify(text) {

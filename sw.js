@@ -1,4 +1,4 @@
-const cacheName = "family-dinner-planner-v10";
+const cacheName = "family-dinner-planner-v11";
 const assets = [
   "./",
   "./index.html",
