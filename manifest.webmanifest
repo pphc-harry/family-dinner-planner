@@ -1,0 +1,17 @@
+{
+  "name": "今晚食咩好？",
+  "short_name": "晚餐規劃",
+  "description": "根據家煮菜單抽取今晚晚餐。",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#fffaf3",
+  "theme_color": "#fffaf3",
+  "icons": [
+    {
+      "src": "./assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

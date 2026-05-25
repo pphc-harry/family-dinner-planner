@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-HK">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="家庭晚餐抽菜 App，按家煮菜單抽取今晚一餸一菜。"
+    />
+    <meta name="theme-color" content="#fffaf3" />
+    <title>今晚食咩好？</title>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./assets/icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css?v=10" />
+  </head>
+  <body>
+    <main class="phone-shell">
+      <div class="status-bar" aria-hidden="true">
+        <span>9:41</span>
+        <span>▮▮▮  Wi-Fi  ▰</span>
+      </div>
+      <header class="app-header">
+        <div>
+          <button class="menu-dot" type="button" aria-label="選單">☰</button>
+          <h1>今晚食咩好？</h1>
+          <p class="header-copy">抽一份屋企人今晚會想食的一餸一菜。</p>
+        </div>
+        <div class="date-pill" id="todayDate">今日</div>
+      </header>
+
+      <section class="screen is-active" id="screenTonight" aria-label="今晚抽餐">
+        <div class="hero-card">
+          <img src="./assets/dinner-table.svg" alt="家庭晚餐餐桌" width="280" height="192" />
+          <div>
+            <p class="eyebrow">今晚餐單</p>
+            <h2 id="mealTitle">未抽餐</h2>
+            <p id="mealSubtitle">按下按鈕，抽一個主菜加一個青菜。</p>
+          </div>
+        </div>
+
+        <button id="drawDinnerButton" class="draw-button" type="button">
+          抽今晚餐單
+        </button>
+
+        <div class="combo-control" role="radiogroup" aria-label="晚餐組合">
+          <button class="combo-button is-active" type="button" data-combo="main-veg">
+            一餸一菜
+          </button>
+          <button class="combo-button" type="button" data-combo="quick">
+            快煮一餸一菜
+          </button>
+        </div>
+
+        <div id="mealCards" class="meal-cards" aria-live="polite"></div>
+
+        <div class="action-row">
+          <button id="redrawButton" class="secondary-button" type="button">重新抽</button>
+          <button id="saveDinnerButton" class="primary-button" type="button">記低今晚</button>
+        </div>
+      </section>
+
+      <section class="screen" id="screenMenu" aria-label="菜單">
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <p class="eyebrow">Menu</p>
+              <h2>家煮菜單</h2>
+            </div>
+            <input
+              id="dishSearch"
+              class="search-input"
+              type="search"
+              placeholder="搜尋雞翼、排骨、快煮..."
+              autocomplete="off"
+            />
+          </div>
+          <div id="categoryTabs" class="category-tabs"></div>
+          <div id="dishList" class="dish-list"></div>
+        </div>
+
+        <div class="panel compact-panel">
+          <p class="eyebrow">Custom</p>
+          <h2>加新菜</h2>
+          <form id="customDishForm" class="custom-form">
+            <input id="customDishName" required maxlength="32" placeholder="例如：蒜香雞髀飯" />
+            <select id="customDishType">
+              <option value="main">主菜</option>
+              <option value="vegetable">青菜</option>
+              <option value="quick">快煮</option>
+            </select>
+            <button class="primary-button" type="submit">加入</button>
+          </form>
+          <p id="formNote" class="form-note" role="status"></p>
+        </div>
+      </section>
+
+      <section class="screen" id="screenHistory" aria-label="紀錄">
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <p class="eyebrow">History</p>
+              <h2>最近煮過</h2>
+            </div>
+            <button id="clearHistoryButton" class="icon-button" type="button" aria-label="清除紀錄">
+              ×
+            </button>
+          </div>
+          <ol id="historyList" class="history-list"></ol>
+        </div>
+
+        <div class="panel">
+          <p class="eyebrow">Settings</p>
+          <h2>抽餐偏好</h2>
+          <label class="switch">
+            <input id="avoidRecent" type="checkbox" checked />
+            <span>避開最近三晚</span>
+          </label>
+          <label class="switch">
+            <input id="preferQuick" type="checkbox" />
+            <span>今晚偏向快煮</span>
+          </label>
+          <button id="copyDinnerButton" class="secondary-button full-button" type="button">
+            複製今晚餐單
+          </button>
+        </div>
+      </section>
+
+      <nav class="bottom-tabs" aria-label="主要分頁">
+        <button class="tab-button is-active" type="button" data-screen="screenTonight">
+          <span>●</span>
+          今晚
+        </button>
+        <button class="tab-button" type="button" data-screen="screenMenu">
+          <span>▦</span>
+          菜單
+        </button>
+        <button class="tab-button" type="button" data-screen="screenHistory">
+          <span>✓</span>
+          紀錄
+        </button>
+      </nav>
+
+      <textarea id="shareText" class="share-text" aria-label="可分享今晚餐單" readonly></textarea>
+    </main>
+
+    <template id="mealCardTemplate">
+      <article class="meal-card">
+        <div class="meal-type"></div>
+        <h3></h3>
+        <p></p>
+      </article>
+    </template>
+
+    <script type="module" src="./app.js?v=10"></script>
+  </body>
+</html>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 440" role="img" aria-label="家庭晚餐餐桌">
+  <rect width="640" height="440" rx="28" fill="#fff7ea"/>
+  <ellipse cx="320" cy="250" rx="240" ry="132" fill="#e8d2b1"/>
+  <ellipse cx="320" cy="238" rx="214" ry="108" fill="#f9ead1"/>
+  <circle cx="320" cy="238" r="86" fill="#fffdf8" stroke="#ded4c2" stroke-width="12"/>
+  <circle cx="320" cy="238" r="54" fill="#147c73"/>
+  <path d="M278 228c19-32 64-38 90 0-27-8-57-7-90 0Z" fill="#ffe1a6"/>
+  <path d="M282 264c29 22 71 21 78 0-30 9-56 9-78 0Z" fill="#b64a32"/>
+  <circle cx="190" cy="185" r="46" fill="#fffdf8" stroke="#ded4c2" stroke-width="9"/>
+  <path d="M158 184c20-24 45-28 75-8-16 22-45 28-75 8Z" fill="#527a3d"/>
+  <circle cx="457" cy="190" r="44" fill="#fffdf8" stroke="#ded4c2" stroke-width="9"/>
+  <path d="M428 195c18-25 44-31 78-17-17 26-43 32-78 17Z" fill="#c78a21"/>
+  <circle cx="206" cy="306" r="40" fill="#fffdf8" stroke="#ded4c2" stroke-width="9"/>
+  <path d="M177 308c23-22 50-21 76 1-26 16-51 15-76-1Z" fill="#416a8f"/>
+  <circle cx="450" cy="304" r="42" fill="#fffdf8" stroke="#ded4c2" stroke-width="9"/>
+  <path d="M420 300c21-28 52-29 74-3-26 13-51 14-74 3Z" fill="#b64a32"/>
+  <path d="M96 82h118M426 82h118" stroke="#147c73" stroke-width="16" stroke-linecap="round"/>
+  <path d="M106 116h72M462 116h72" stroke="#b64a32" stroke-width="16" stroke-linecap="round"/>
+  <path d="M112 382h416" stroke="#221f1b" stroke-width="18" stroke-linecap="round" opacity=".16"/>
+</svg>
