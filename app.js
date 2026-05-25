@@ -376,6 +376,9 @@ function renderMenu() {
     thumb.src = dishPhotoFor(dish);
     thumb.alt = `${dish.name}插圖`;
     thumb.loading = "lazy";
+    thumb.decoding = "async";
+    thumb.width = 78;
+    thumb.height = 78;
     title.textContent = dish.name;
     meta.textContent = `${dish.type} · ${dish.tags.slice(0, 3).join(" / ")}`;
     button.type = "button";
@@ -507,25 +510,25 @@ function displayName(dish) {
 }
 
 function dishPhotoFor(dish) {
-  const exact = `assets/dish-photos/${slugify(`${dish.type}-${dish.name}`)}.png`;
+  const exact = `assets/dish-photos/${slugify(`${dish.type}-${dish.name}`)}.jpg`;
   if (!dish.id?.startsWith("custom-")) return exact;
 
   const tags = [dish.name, ...dish.tags].join(" ");
-  if (tags.includes("雞翼") || tags.includes("雞")) return "assets/dish-photos/photo-chicken-wings.png";
-  if (tags.includes("牛") || tags.includes("肥牛")) return "assets/dish-photos/photo-beef-onion.png";
+  if (tags.includes("雞翼") || tags.includes("雞")) return "assets/dish-photos/photo-chicken-wings.jpg";
+  if (tags.includes("牛") || tags.includes("肥牛")) return "assets/dish-photos/photo-beef-onion.jpg";
   if (tags.includes("魚") || tags.includes("海鮮") || tags.includes("鮪") || tags.includes("帶子")) {
-    return "assets/dish-photos/photo-fish.png";
+    return "assets/dish-photos/photo-fish.jpg";
   }
-  if (tags.includes("肉餅") || tags.includes("免治")) return "assets/dish-photos/photo-pork-patty.png";
-  if (tags.includes("豬") || tags.includes("排骨") || tags.includes("叉燒")) return "assets/dish-photos/photo-pork-ribs.png";
+  if (tags.includes("肉餅") || tags.includes("免治")) return "assets/dish-photos/photo-pork-patty.jpg";
+  if (tags.includes("豬") || tags.includes("排骨") || tags.includes("叉燒")) return "assets/dish-photos/photo-pork-ribs.jpg";
   if (tags.includes("蕃茄") || tags.includes("番茄") || tags.includes("炒蛋") || tags.includes("荷包蛋")) {
-    return "assets/dish-photos/photo-tomato-egg.png";
+    return "assets/dish-photos/photo-tomato-egg.jpg";
   }
   if (tags.includes("水蛋") || tags.includes("豆腐") || tags.includes("腐")) {
-    return "assets/dish-photos/photo-steamed-egg.png";
+    return "assets/dish-photos/photo-steamed-egg.jpg";
   }
   if (dish.type === "青菜" || tags.includes("青菜") || tags.includes("蔬菜") || tags.includes("勝瓜") || tags.includes("節瓜")) {
-    return "assets/dish-photos/photo-greens.png";
+    return "assets/dish-photos/photo-greens.jpg";
   }
   return generatedDishImage(dish);
 }
