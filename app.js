@@ -373,7 +373,7 @@ function renderMenu() {
     const meta = document.createElement("span");
     const button = document.createElement("button");
     thumb.className = "dish-thumb";
-    thumb.src = generatedDishImage(dish);
+    thumb.src = dishPhotoFor(dish);
     thumb.alt = `${dish.name}插圖`;
     thumb.loading = "lazy";
     title.textContent = dish.name;
@@ -504,6 +504,27 @@ function comboTitle(combo) {
 
 function displayName(dish) {
   return dish.variant ? `${dish.name} · ${dish.variant}` : dish.name;
+}
+
+function dishPhotoFor(dish) {
+  const tags = [dish.name, ...dish.tags].join(" ");
+  if (tags.includes("雞翼") || tags.includes("雞")) return "assets/dish-photos/photo-chicken-wings.png";
+  if (tags.includes("牛") || tags.includes("肥牛")) return "assets/dish-photos/photo-beef-onion.png";
+  if (tags.includes("魚") || tags.includes("海鮮") || tags.includes("鮪") || tags.includes("帶子")) {
+    return "assets/dish-photos/photo-fish.png";
+  }
+  if (tags.includes("肉餅") || tags.includes("免治")) return "assets/dish-photos/photo-pork-patty.png";
+  if (tags.includes("豬") || tags.includes("排骨") || tags.includes("叉燒")) return "assets/dish-photos/photo-pork-ribs.png";
+  if (tags.includes("蕃茄") || tags.includes("番茄") || tags.includes("炒蛋") || tags.includes("荷包蛋")) {
+    return "assets/dish-photos/photo-tomato-egg.png";
+  }
+  if (tags.includes("水蛋") || tags.includes("豆腐") || tags.includes("腐")) {
+    return "assets/dish-photos/photo-steamed-egg.png";
+  }
+  if (dish.type === "青菜" || tags.includes("青菜") || tags.includes("蔬菜") || tags.includes("勝瓜") || tags.includes("節瓜")) {
+    return "assets/dish-photos/photo-greens.png";
+  }
+  return generatedDishImage(dish);
 }
 
 function generatedDishImage(dish) {

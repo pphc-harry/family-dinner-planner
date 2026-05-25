@@ -1,4 +1,4 @@
-const cacheName = "family-dinner-planner-v11";
+const cacheName = "family-dinner-planner-v13";
 const assets = [
   "./",
   "./index.html",
@@ -7,6 +7,14 @@ const assets = [
   "./manifest.webmanifest",
   "./assets/icon.svg",
   "./assets/dinner-table.svg",
+  "./assets/dish-photos/photo-beef-onion.png",
+  "./assets/dish-photos/photo-chicken-wings.png",
+  "./assets/dish-photos/photo-fish.png",
+  "./assets/dish-photos/photo-greens.png",
+  "./assets/dish-photos/photo-pork-patty.png",
+  "./assets/dish-photos/photo-pork-ribs.png",
+  "./assets/dish-photos/photo-steamed-egg.png",
+  "./assets/dish-photos/photo-tomato-egg.png",
 ];
 
 self.addEventListener("install", (event) => {
