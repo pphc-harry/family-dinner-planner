@@ -507,6 +507,9 @@ function displayName(dish) {
 }
 
 function dishPhotoFor(dish) {
+  const exact = `assets/dish-photos/${slugify(`${dish.type}-${dish.name}`)}.png`;
+  if (!dish.id?.startsWith("custom-")) return exact;
+
   const tags = [dish.name, ...dish.tags].join(" ");
   if (tags.includes("雞翼") || tags.includes("雞")) return "assets/dish-photos/photo-chicken-wings.png";
   if (tags.includes("牛") || tags.includes("肥牛")) return "assets/dish-photos/photo-beef-onion.png";
