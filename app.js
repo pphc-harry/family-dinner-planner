@@ -67,7 +67,7 @@ const vegetableDishes = [
 
 const storageKey = "familyDinnerPlanner:v2";
 const oldStorageKey = "familyDinnerPlanner:v1";
-const photoVersion = "16";
+const photoVersion = "18";
 const dateFormatter = new Intl.DateTimeFormat("zh-Hant-HK", {
   weekday: "short",
   month: "numeric",
